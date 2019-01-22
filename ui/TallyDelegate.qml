@@ -2,22 +2,23 @@ import QtQuick 2.9
 import QtQuick.Controls 2.2
 
 Rectangle {
-    id: rectangle
+    id: tallydelegate
     height: 64
     width: parent.width
     Row {
-        height: 64
+        height: parent.height
         width: parent.width
         Image {
             id: image
             height: parent.height
+            source: "assets/placeholders/cards.png"
             width: parent.height
         }
 
         Column {
             id: column
-            width: rectangle.width - image.width
-            height: rectangle.height
+            width: parent.width - image.width
+            height: parent.height
 
             Text {
                 id: tally_name
@@ -58,7 +59,6 @@ Rectangle {
         }
     }
 }
-
 
 
 

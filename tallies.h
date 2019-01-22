@@ -8,6 +8,7 @@ class Tallies : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QAbstractItemModel * model READ model)
+    Q_PROPERTY(QStringList str_model READ str_model)
     Q_DISABLE_COPY(Tallies)
 
 public:
@@ -26,6 +27,17 @@ public:
             m_model->setData(m_model->index(newRow,0),QVariant::fromValue(newTally),Qt::EditRole);
         }
     QAbstractItemModel* model() const {return m_model;}
+    QStringList str_model() const {
+        QStringList str;
+
+        for( int i = 0; i < m_model->rowCount(); ++i ) {
+            const auto & idx = m_model->index(i, 0);
+            auto tally = qvariant_cast<FlashCat::Tally>(idx.data());
+            str.append(tally.getName());
+        }
+
+        return str;
+    }
 
 private:
     void fillDummyData(){

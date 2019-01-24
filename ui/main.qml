@@ -94,6 +94,6 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: Home {}
+        initialItem: Question{}
     }
 }

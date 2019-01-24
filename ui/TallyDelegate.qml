@@ -6,13 +6,13 @@ Rectangle {
     height: 64
     width: parent.width
     Row {
-        height: parent.height
-        width: parent.width
+        anchors.fill: parent
+
         Image {
             id: image
             height: parent.height
-            source: "assets/placeholders/cards.png"
             width: parent.height
+            source: "qrc:/assets/placeholders/cards.png"
         }
 
         Column {

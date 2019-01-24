@@ -36,3 +36,14 @@ HEADERS += \
     card.h \
     answer.h \
     tallies.h \
+
+DISTFILES += \
+    ui/LoginForm.ui.qml \
+    ui/Login.qml \
+    ui/RegisterForm.ui.qml \
+    ui/Register.qml \
+    ui/TallyForm.ui.qml \
+    ui/Tally.qml \
+    ui/CardDelegate.qml \
+    ui/QuestionForm.ui.qml \
+    ui/Question.qml

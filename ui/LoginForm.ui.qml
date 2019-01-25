@@ -3,6 +3,9 @@ import QtQuick.Controls 2.2
 
 Page {
     id: page_login
+    property alias btn_login: btn_login
+    property alias tf_email: tf_email
+    property alias tf_password: tf_password
     title: qsTr("FlashCat")
 
     anchors.fill: parent

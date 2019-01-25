@@ -3,6 +3,7 @@
 #include <QQmlContext>
 #include <QDebug>
 
+#include "backend.h"
 #include "tally.h"
 #include "tallies.h"
 
@@ -16,7 +17,10 @@ int main(int argc, char *argv[])
     Tallies tallies;
     QQmlApplicationEngine engine;
 
+    Backend backend;
+
     engine.rootContext()->setContextProperty("talls", &tallies);
+    engine.rootContext()->setContextProperty("backend", &backend);
 
     engine.load(QUrl(QStringLiteral("qrc:/ui/main.qml")));
     if (engine.rootObjects().isEmpty())

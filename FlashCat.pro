@@ -15,6 +15,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += main.cpp \
     tallies.cpp \
     main.cpp \
+    backend.cpp \
+    user.cpp \
+    jsonparser.cpp
 
 RESOURCES += $$files(assets/*.png, true) \
     $$files(ui/*.qml) \
@@ -36,6 +39,9 @@ HEADERS += \
     card.h \
     answer.h \
     tallies.h \
+    backend.h \
+    user.h \
+    jsonparser.h
 
 DISTFILES += \
     ui/LoginForm.ui.qml \

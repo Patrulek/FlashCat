@@ -12,6 +12,7 @@ ApplicationWindow {
 
             ToolButton {
                 id: toolButton
+                visible: false
                 text: stackView.depth > 1 ? "\u25C0" : "\u2630"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
@@ -27,6 +28,7 @@ ApplicationWindow {
 
             ToolButton {
                 id: toolButton2
+                visible: false
                 icon.source: "qrc:/assets/placeholders/options.png"
                 font.pixelSize: Qt.application.font.pixelSize * 1.6
                 anchors.right: parent.right
@@ -48,6 +50,8 @@ ApplicationWindow {
 
     Drawer {
         id: nav_drawer
+        interactive: false
+
         width: window.width * 0.66
         height: window.height
 
@@ -86,14 +90,33 @@ ApplicationWindow {
 
     Drawer {
         id: opt_drawer
+        interactive: false
         width: window.width * 0.66
         height: window.height
         edge: Qt.RightEdge
+
+        Button {
+            id: btn_logout
+            anchors {left: parent.left; right: parent.right; top:parent.top;}
+            height: 64
+            text: "logout"
+            onClicked: backend.logout();
+        }
     }
 
     StackView {
         id: stackView
         anchors.fill: parent
         initialItem: Login{}
+    }
+
+    Connections {
+        target: backend
+        onLoginSuccessChanged: {
+            toolButton.visible = backend.login_success;
+            toolButton2.visible = backend.login_success;
+            nav_drawer.interactive = backend.login_success;
+            opt_drawer.interactive = backend.login_success;
+        }
     }
 }

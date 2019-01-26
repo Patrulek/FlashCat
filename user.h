@@ -6,6 +6,8 @@ class User
 {
 public:
     User();
+
+    int id;
 };
 
 #endif // USER_H

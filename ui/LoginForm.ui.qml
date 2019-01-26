@@ -6,6 +6,8 @@ Page {
     property alias btn_login: btn_login
     property alias tf_email: tf_email
     property alias tf_password: tf_password
+    property alias lbl_invalid: lbl_invalid
+    property alias lbl_register_ma: lbl_register_ma
     title: qsTr("FlashCat")
 
     anchors.fill: parent
@@ -44,6 +46,21 @@ Page {
             anchors.centerIn: parent
         }
 
+        Label {
+            id: lbl_invalid
+            color: "#d65b69"
+            text: qsTr("Invalid username/password")
+            visible: false
+            font.pointSize: 10
+            horizontalAlignment: Text.AlignHCenter
+            anchors.topMargin: height / 2
+            anchors.right: tf_password.right
+            anchors.rightMargin: 0
+            anchors.left: tf_password.left
+            anchors.leftMargin: 0
+            anchors.top: tf_password.bottom
+        }
+
         Button {
             id: btn_login
             text: "Login"
@@ -62,6 +79,11 @@ Page {
             anchors.right: btn_login.right
             anchors.top: btn_login.bottom
             anchors.topMargin: height / 2
+
+            MouseArea {
+                id: lbl_register_ma
+                anchors.fill: parent
+            }
         }
     }
 }

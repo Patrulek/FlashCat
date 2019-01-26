@@ -8,6 +8,8 @@ class JsonParser
 public:
     JsonParser();
     void fromString(QString _string);
+    void fromObject(QJsonObject _obj);
+    QString toString();
     QJsonValue getObject(QString _key);
     QString getValue(QString _key);
 

@@ -3,6 +3,12 @@ import QtQuick.Controls 2.2
 
 Page {
     id: page_register
+    property alias lbl_login_ma: lbl_login_ma
+    property alias btn_register: btn_register
+    property alias tf_email: tf_email
+    property alias tf_password: tf_password
+    property alias tf_firstname: tf_firstname
+    property alias tf_lastname: tf_lastname
     title: qsTr("FlashCat")
 
     anchors.fill: parent
@@ -86,6 +92,11 @@ Page {
             anchors.right: btn_register.right
             anchors.top: btn_register.bottom
             anchors.topMargin: height / 2
+
+            MouseArea {
+                id: lbl_login_ma
+                anchors.fill: parent
+            }
         }
     }
 }

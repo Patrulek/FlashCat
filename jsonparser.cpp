@@ -9,6 +9,12 @@ JsonParser::JsonParser()
 
 }
 
+void JsonParser::fromObject(QJsonObject _obj) {
+    doc.setObject(_obj);
+    str = doc.toJson();
+    valid = true;
+}
+
 QJsonValue JsonParser::getObject(QString _key) {
     if( !valid)
         throw std::runtime_error(("Invalid JSON:\n" + str).toStdString());
@@ -16,6 +22,13 @@ QJsonValue JsonParser::getObject(QString _key) {
     QJsonObject obj = doc.object();
 
     return obj[_key];
+}
+
+QString JsonParser::toString() {
+    if( !valid)
+        throw std::runtime_error(("Invalid JSON:\n" + str).toStdString());
+
+    return str;
 }
 
 QString JsonParser::getValue(QString _key) {

@@ -6,4 +6,19 @@ LoginForm {
     btn_login.onClicked: {
         backend.login(tf_email.text, tf_password.text)
     }
+
+    lbl_register_ma.onClicked: {
+        lbl_invalid.visible = false
+        stackView.push("qrc:/ui/Register.qml")
+    }
+
+    Connections  {
+        target: backend
+        onLoginSuccessChanged: {
+            lbl_invalid.visible = !backend.login_success;
+
+            if( backend.login_success )
+                stackView.replace("qrc:/ui/Home.qml")
+        }
+    }
 }

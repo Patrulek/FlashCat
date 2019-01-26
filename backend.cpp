@@ -14,26 +14,31 @@ Backend::Backend()
     parser = std::make_unique<JsonParser>();
     user = std::make_unique<User>();
 
-    QObject::connect(network.get(), &QNetworkAccessManager::finished,
-            this, [=](QNetworkReply *reply) {
-
-                if(reply->error())
-                    processError(reply);
-                else
-                    loginSuccess(reply);
-            }
-        );
+    connect(network.get(), SIGNAL(finished(QNetworkReply *)),
+            this, SLOT(onRequestReply(QNetworkReply *)));
 }
 
-void Backend::processError(QNetworkReply *_reply) {
-    if (_reply->error() == QNetworkReply::NetworkError::AuthenticationRequiredError)
-        qDebug() << "nieprawidlowe dane logowania";
-    else
-        qDebug() << _reply->errorString();
+void Backend::logout() {
+    qDebug() << "logout";
 }
 
-void Backend::loginSuccess(QNetworkReply * _reply) {
+void Backend::onRequestReply(QNetworkReply *_reply) {
+    qDebug() << "type: " << _reply->property("type");
+
+    if(_reply->error())
+        processError(_reply);
+    else {
+        if( _reply->property("type") == "login")
+            loginSuccess(_reply);
+        else
+            registerSuccess(_reply);
+    }
+}
+
+void Backend::registerSuccess(QNetworkReply *_reply) {
     QString answer = _reply->readAll();
+    register_success = true;
+    emit registerSuccessChanged();
 
     try {
         parser->fromString(answer);
@@ -45,13 +50,71 @@ void Backend::loginSuccess(QNetworkReply * _reply) {
     }
 }
 
+void Backend::reg(QString _email, QString _password, QString _firstname, QString _lastname) {
+    QUrl url("http://flashcat.io/register");
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::KnownHeaders::ContentTypeHeader, "application/json;charset=UTF-8");
+
+    QJsonObject obj;
+    obj["username"] = _email;
+    obj["password"] = _password;
+    obj["firstname"] = _firstname;
+    obj["lastname"] = _lastname;
+    parser->fromObject(obj);
+    QByteArray data = parser->toString().toUtf8();
+
+    try {
+        QNetworkReply * reply = network->post(request, data);
+        reply->setProperty("type", "register");
+    } catch(std::exception & ex) {
+        qDebug() << ex.what() << endl;
+    }
+}
+
+
+void Backend::processError(QNetworkReply *_reply) {
+    if( _reply->property("type") == "login") {
+        login_success = false;
+        emit loginSuccessChanged();
+    } else {
+        register_success = false;
+        emit registerSuccessChanged();
+    }
+
+    qDebug() << _reply->error();
+
+    if (_reply->error() == QNetworkReply::NetworkError::AuthenticationRequiredError)
+        qDebug() << "nieprawidlowe dane logowania";
+    else
+        qDebug() << _reply->errorString();
+}
+
+void Backend::loginSuccess(QNetworkReply * _reply) {
+    QString answer = _reply->readAll();
+    login_success = true;
+    emit loginSuccessChanged();
+
+    try {
+        parser->fromString(answer);
+        qDebug() << parser->getValue("id");
+        qDebug() << parser->getValue("registerTime");
+        qDebug() << parser->getValue("username");
+
+        user->id = parser->getValue("id").toInt();
+    } catch ( std::exception & ex) {
+        qDebug() << ex.what() << endl;
+    }
+}
+
 void Backend::login(QString _email, QString _password) {
     QUrl url("http://flashcat.io/login");
 
     QNetworkRequest request(url);
-    request.setRawHeader("username", _email.toLocal8Bit());
-    request.setRawHeader("password", _password.toLocal8Bit());
+    request.setHeader(QNetworkRequest::KnownHeaders::ContentTypeHeader, "application/json;charset=UTF-8");
+    request.setRawHeader("username", _email.toUtf8());
+    request.setRawHeader("password", _password.toUtf8());
     QByteArray data;
 
-    network->post(request, data);
+    QNetworkReply * reply = network->post(request, data);
+    reply->setProperty("type", "login");
 }

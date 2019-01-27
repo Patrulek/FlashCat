@@ -100,7 +100,11 @@ ApplicationWindow {
             anchors {left: parent.left; right: parent.right; top:parent.top;}
             height: 64
             text: "logout"
-            onClicked: backend.logout();
+            onClicked: {
+                opt_drawer.close();
+                backend.logout();
+                stackView.replace("qrc:/ui/Login.qml");
+            }
         }
     }
 

@@ -50,4 +50,5 @@ DISTFILES += \
     ui/Tally.qml \
     ui/CardDelegate.qml \
     ui/QuestionForm.ui.qml \
-    ui/Question.qml
+    ui/Question.qml \
+    ui/main.qml

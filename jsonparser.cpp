@@ -1,6 +1,7 @@
 #include "jsonparser.h"
 
 #include <QJsonObject>
+#include <QJsonArray>
 #include <QDebug>
 
 JsonParser::JsonParser()
@@ -31,12 +32,11 @@ QString JsonParser::toString() {
     return str;
 }
 
-QString JsonParser::getValue(QString _key) {
+QString JsonParser::getObjectValue(QJsonObject _obj, QString _key) {
     if( !valid)
         throw std::runtime_error(("Invalid JSON:\n" + str).toStdString());
 
-    QJsonObject obj = doc.object();
-    QJsonValue val = obj[_key];
+    QJsonValue val = _obj[_key];
 
     switch(val.type()) {
         case QJsonValue::Type::String:
@@ -53,9 +53,9 @@ void JsonParser::fromString(QString _string) {
     doc = QJsonDocument::fromJson(str.toUtf8());
 
        if(!doc.isNull()) {
-           if(!doc.isObject()) {
+           if(!doc.isObject() && !doc.isArray()) {
                valid = false;
-               throw std::runtime_error("Document is not an object");
+               throw std::runtime_error("Document is not an valid JSON object");
            }
 
            valid = true;

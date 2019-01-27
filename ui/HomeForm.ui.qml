@@ -23,6 +23,7 @@ Page {
 
         ListView {
             id: listView
+            boundsBehavior: Flickable.StopAtBounds
             clip: true
             anchors {
                 bottom: btn.top
@@ -38,3 +39,11 @@ Page {
         }
     }
 }
+
+
+
+
+/*##^## Designer {
+    D{i:0;autoSize:true;height:480;width:640}
+}
+ ##^##*/

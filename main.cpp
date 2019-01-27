@@ -14,12 +14,11 @@ int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
-    Tallies tallies;
     QQmlApplicationEngine engine;
 
     Backend backend;
 
-    engine.rootContext()->setContextProperty("talls", &tallies);
+    engine.rootContext()->setContextProperty("talls", &backend.user->tallies);
     engine.rootContext()->setContextProperty("backend", &backend);
 
     engine.load(QUrl(QStringLiteral("qrc:/ui/main.qml")));

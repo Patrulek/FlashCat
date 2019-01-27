@@ -44,6 +44,7 @@ Page {
             placeholderText: "Password..."
             width: parent.width / 2
             anchors.centerIn: parent
+            echoMode: TextInput.Password
         }
 
         Label {

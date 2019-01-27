@@ -16,7 +16,6 @@ public:
         : QObject(parent) {
         m_model=new QStandardItemModel(this);
         m_model->insertColumn(0);
-        fillDummyData();
     }
 
     Q_SLOT void addTally(const QString& name) {
@@ -26,6 +25,11 @@ public:
             m_model->insertRow(newRow);
             m_model->setData(m_model->index(newRow,0),QVariant::fromValue(newTally),Qt::EditRole);
         }
+
+    void clear() {
+        m_model->removeRows(0, m_model->rowCount()); // ??
+    }
+
     QAbstractItemModel* model() const {return m_model;}
     QStringList str_model() const {
         QStringList str;
@@ -40,17 +44,6 @@ public:
     }
 
 private:
-    void fillDummyData(){
-        addTally("tally1");
-        addTally("tally2");
-        addTally("tally3");
-        addTally("tally4");
-        addTally("tally5");
-        addTally("tally6");
-        addTally("tally7");
-        addTally("tally8");
-        addTally("tally9");
-    }
     QAbstractItemModel* m_model;
 };
 

@@ -16,6 +16,7 @@ LoginForm {
         target: backend
         onLoginSuccessChanged: {
             lbl_invalid.visible = !backend.login_success;
+            lbl_invalid.text = backend.status_error;
 
             if( backend.login_success )
                 stackView.replace("qrc:/ui/Home.qml")

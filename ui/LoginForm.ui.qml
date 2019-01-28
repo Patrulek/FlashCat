@@ -37,6 +37,7 @@ Page {
             anchors.left: tf_password.left
             anchors.right: tf_password.right
             width: parent.width / 2
+            selectByMouse: true
         }
 
         TextField {
@@ -45,6 +46,7 @@ Page {
             width: parent.width / 2
             anchors.centerIn: parent
             echoMode: TextInput.Password
+            selectByMouse: true
         }
 
         Label {

@@ -8,6 +8,10 @@
 namespace FlashCat {
     class Card {
         public:
+            Card(int _id) : id(_id) {}
+            Card() = default;
+
+            int id;
             QString question;
             QVector<Answer> answers;
     };

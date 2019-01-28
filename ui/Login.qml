@@ -18,8 +18,14 @@ LoginForm {
             lbl_invalid.visible = !backend.login_success;
             lbl_invalid.text = backend.status_error;
 
-            if( backend.login_success )
+            if( backend.login_success ) {
                 stackView.replace("qrc:/ui/Home.qml")
+                lv_tallies.model = talls.model
+            }
         }
+    }
+
+    tf_password.onAccepted: {
+        backend.login(tf_email.text, tf_password.text)
     }
 }

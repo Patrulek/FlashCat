@@ -81,7 +81,6 @@ ApplicationWindow {
 
                 spacing: 16
                 cacheBuffer: 64
-                model: talls.model
 
                 delegate: TallyDelegate {}
             }

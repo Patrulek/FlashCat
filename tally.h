@@ -14,17 +14,20 @@ namespace FlashCat {
         Q_PROPERTY(int size READ getSize)
 
         public:
-            explicit Tally(const QString & _name)
-                : name(_name) {}
+            explicit Tally(const QString & _name, int _id)
+                : name(_name), id(_id) {}
             Tally() = default;
 
             void setName(const QString & _name) { name = _name; }
+            void addCard(int _id) { cards.push_back(Card(_id)); }
 
-            QString getName() { return name; }
-            QVector<Card> getCards() { return cards; }
-            int getSize() { return cards.size(); }
+            QString getName() const { return name; }
+            QVector<Card> getCards() const { return cards; }
+            int getSize() const { return cards.size(); }
+            int getId() const { return id; }
         private:
             QString name;
+            int id;
             QVector<Card> cards;
     };
 }

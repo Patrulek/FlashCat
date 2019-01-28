@@ -5,20 +5,21 @@ Rectangle {
     id: tallydelegate
     height: 64
     width: parent.width
+
     Row {
+        id: par_row
         anchors.fill: parent
 
         Image {
             id: image
-            height: parent.height
+            anchors { left: parent.left; top: parent.top; bottom: parent.bottom}
             width: parent.height
             source: "qrc:/assets/placeholders/cards.png"
         }
 
         Column {
             id: column
-            width: parent.width - image.width
-            height: parent.height
+            anchors{left: image.right; top:parent.top; bottom:parent.bottom; right:parent.right}
 
             Text {
                 id: tally_name
@@ -56,6 +57,17 @@ Rectangle {
 
                 }
             }
+        }
+    }
+
+
+    MouseArea {
+        id: tallydelegate_ma
+        anchors.fill: parent
+
+        onClicked: {
+            backend.getTallyCards(talls.model.data(index))
+            stackView.push("qrc:/ui/Tally.qml")
         }
     }
 }

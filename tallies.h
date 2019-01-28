@@ -18,9 +18,21 @@ public:
         m_model->insertColumn(0);
     }
 
-    Q_SLOT void addTally(const QString& name) {
+    FlashCat::Tally getTally(int _id) {
+        for( int i = 0; i < m_model->rowCount(); ++i ) {
+            const auto & idx = m_model->index(i, 0);
+            auto tally = qvariant_cast<FlashCat::Tally>(idx.data());
+
+            if( tally.getId() == _id )
+                return tally;
+        }
+
+        throw std::runtime_error("No tally found");
+    }
+
+    Q_SLOT void addTally(const QString& name, int _id) {
             const int newRow= m_model->rowCount();
-            const FlashCat::Tally newTally(name);
+            const FlashCat::Tally newTally(name, _id);
 
             m_model->insertRow(newRow);
             m_model->setData(m_model->index(newRow,0),QVariant::fromValue(newTally),Qt::EditRole);
